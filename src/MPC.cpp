@@ -4,10 +4,12 @@
 #include "Eigen-3.3/Eigen/Core"
 
 using CppAD::AD;
+using namespace std;
 
 // TODO: Set the timestep length and duration
-size_t N = 0;
-double dt = 0;
+//Setting N = 10 and dt = 0.1s making T = 1s
+size_t N = 10;
+double dt = 0.1;
 
 // This value assumes the model presented in the classroom is used.
 //
@@ -42,7 +44,7 @@ class FG_eval {
 MPC::MPC() {}
 MPC::~MPC() {}
 
-std::vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
+vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   bool ok = true;
   size_t i;
   typedef CPPAD_TESTVECTOR(double) Dvector;
@@ -52,9 +54,10 @@ std::vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   // element vector and there are 10 timesteps. The number of variables is:
   //
   // 4 * 10 + 2 * 9
-  size_t n_vars = 0;
+  // 
+  size_t n_vars = (N * 6) + (2 * (N-1)); //for N = 10, n_vars = 78
   // TODO: Set the number of constraints
-  size_t n_constraints = 0;
+  size_t n_constraints = N * 6;
 
   // Initial value of the independent variables.
   // SHOULD BE 0 besides initial state.
