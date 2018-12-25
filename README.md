@@ -51,7 +51,7 @@ Self-Driving Car Engineer Nanodegree Program
 ### Actuators
 
 1. Steering Wheel 'delta'
-2. Throttle and Break Peddle 'a' (positive or negative acceleration)
+2. Throttle and Break peddle 'a' (positive or negative acceleration)
 
 ### Update Equations
 
@@ -71,11 +71,11 @@ where L<sub>f</sub> is the distance between the front of the vehicle and its cen
 
 ## Timestep Length and Elapsed Duration (N & dt)
 
-After trial and error, the following values were choosen for the hyperparameters in the project,
+After trial and error, the following values were chosen for the hyper parameters in the project,
 
 * Prediction Horizon (T) = N * dt = 1s
 
-First T is choosen such that it is in reasonable range, few seconds. Beyound horizon, since the environment changes enough, it won't make sense to predict further into future. Then N and dt are tuned accordingly
+First T is chosen such that it is in reasonable range, few seconds. Beyond horizon, since the environment changes enough, it won't make sense to predict further into future. Then N and dt are tuned accordingly
 
 * Timestep Length (N) = 10
 
@@ -99,4 +99,4 @@ dt should be as small as possible
 
 ## Model Predictive Control with Latency
 
-An Actuation command won't excute instantly. There will be delay as the command propogates through the system. Also contributing factor to the latency is actuator dynamics. For example the time elapsed between when you command a steering angle to when that angle is actually achieved. In this project i try adding penalty for speed and steer so that the vehicle slows down at turns giving more time for computation.
+An Actuation command won't excite instantly. There will be delay as the command propagates through the system. Also contributing factor to the latency is actuator dynamics. For example the time elapsed between when you command a steering angle to when that angle is actually achieved. In this project I try adding penalty for speed and steer so that the vehicle slows down at turns giving more time for computation.
