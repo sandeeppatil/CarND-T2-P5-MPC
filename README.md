@@ -40,20 +40,18 @@ Self-Driving Car Engineer Nanodegree Program
 
 ## The Model
 
-### State
+### State [x, y, psi, v]
 
 1. Position (x,y) in 2D
 2. Orientation 'psi'
 3. Velocity 'v'
-
-
-[x, y, psi, v]
-
+4. Cross-Track Error 'cte'
+5. Orientation Error 'epsi'
 
 ### Actuators
 
 1. Steering Wheel 'delta'
-2. Throttle and Break Peddle 'a' (positive or negative)
+2. Throttle and Break Peddle 'a' (positive or negative acceleration)
 
 ### Update Equations
 
@@ -65,15 +63,38 @@ psi<sub>t+1</sub> = psi<sub>t</sub> + (v<sub>t</sub>/L<sub>f</sub>) * delta<sub>
         
 v<sub>t+1</sub> = v<sub>t</sub> + a<sub>t</sub>00 k* dt
 
+cte<sub>t+1</sub> = f(x<sub>t</sub>) - y<sub>t</sub> + v<sub>t</sub> * sin(epsi<sub>t</sub>) * dt;
+
+epsi<sub>t+1</sub> = psi<sub>t</sub> - psi_des + v<sub>t</sub>/L<sub>f</sub> * delta<sub>t</sub> * dt;
+
 where L<sub>f</sub> is the distance between the front of the vehicle and its center of gravity. The larger the vehicle, the slower the turn rate.
-
-The center of the lane is considered as reference or state.   
-errors in our state vector: cte and epsie should tend to 0
-ref velocity = 50, cost function will penalize the vehicle for not maintaining the reference velocity
-
 
 ## Timestep Length and Elapsed Duration (N & dt)
 
+After trial and error, the following values were choosen for the hyperparameters in the project,
+
+* Prediction Horizon (T) = N * dt = 1s
+
+First T is choosen such that it is in reasonable range, few seconds. Beyound horizon, since the environment changes enough, it won't make sense to predict further into future. Then N and dt are tuned accordingly
+
+* Timestep Length (N) = 10
+
+Higher the value of N, the vehicle overshoots reference trajectory and goes off the track and also takes longer to compute.
+
+* Elapsed Duration (dt) = 0.1s
+
+dt should be as small as possible
+
 ## Polynomial Fitting and MPC Preprocessing
+
+* Transform points into vehicle co-ordinate system by subtracting each point from the current position of the vehicle
+
+* Transform orientation to 0 so that the vehicle is heading straight forward by rotating each point to psi degree
+
+* Convert vector of points to Eigen vector
+
+* Use polyfit function to fit the points to a 3rd degree polynomial
+
+* Use polyeval function to evaluate the polynomial for calculating cross-track error
 
 ## Model Predictive Control with Latency
