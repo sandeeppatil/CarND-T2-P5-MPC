@@ -98,3 +98,5 @@ dt should be as small as possible
 * Use polyeval function to evaluate the polynomial for calculating cross-track error
 
 ## Model Predictive Control with Latency
+
+An Actuation command won't excute instantly. There will be delay as the command propogates through the system. Also contributing factor to the latency is actuator dynamics. For example the time elapsed between when you command a steering angle to when that angle is actually achieved. In this project i try adding penalty for speed and steer so that the vehicle slows down at turns giving more time for computation.
