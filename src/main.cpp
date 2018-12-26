@@ -121,8 +121,33 @@ int main() {
             double cte = polyeval(coeffs, 0);  // px = 0, py = 0
             double epsi = -atan(coeffs[1]);  // p
 
+            ////From Review comment
+            //double delta = j[1]["steering_angle"]; 
+            //delta*=-1; //  change of sign because turning left is negative sign in simulator but positive yaw for MPC
+            ////to convert miles per hour to meter per second, and you should convert ref_v too
+            //v*=0.44704;
+            //psi = 0;
+            //px = px + v*cos(psi)*latency; 
+            //py = py + v*sin(psi)*latency;
+            //cte= cte + v*sin(epsi)*latency;
+            //epsi = epsi + v*delta*latency/Lf;
+            //psi = psi + v*delta*latency/Lf;
+            //v = v + a*latency;
+            
+            // Handle latency
+            const double latency = 0.1;
+            const double Lf = 2.67;
+            
+            double new_px   = 0.0 + v * latency; // psi=0, cos(0) = 1
+            double new_py   = 0.0; // sin(0) = 0, y=0 (y + v * 0 * dt)
+            double new_psi  = 0.0 + v * -delta / Lf * latency;
+            double new_v    = v + a * latency;
+            double new_cte  = cte + v * sin(epsi) * latency;
+            double new_epsi = epsi + v * -delta / Lf * latency;
+          
+            // Feed in the predicted state values
             Eigen::VectorXd state(6);
-            state << 0, 0, 0, v, cte, epsi;
+            state << new_px, new_py, new_psi, new_v, new_cte, new_epsi;
             auto vars = mpc.Solve(state, coeffs);
             steer_value = vars[0];
             throttle_value = vars[1];
