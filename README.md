@@ -61,7 +61,7 @@ y<sub>t+1</sub> = y<sub>t</sub> + v<sub>t</sub> * sin(psi<sub>t</sub>) * dt
 
 psi<sub>t+1</sub> = psi<sub>t</sub> + (v<sub>t</sub>/L<sub>f</sub>) * delta<sub>t</sub> * dt
         
-v<sub>t+1</sub> = v<sub>t</sub> + a<sub>t</sub>00 k* dt
+v<sub>t+1</sub> = v<sub>t</sub> + a<sub>t</sub> * dt
 
 cte<sub>t+1</sub> = f(x<sub>t</sub>) - y<sub>t</sub> + v<sub>t</sub> * sin(epsi<sub>t</sub>) * dt;
 
