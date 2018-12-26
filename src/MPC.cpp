@@ -25,7 +25,7 @@ const double Lf = 2.67;
 
 double ref_cte = 0;
 double ref_epsi = 0;
-double ref_v = 50;
+double ref_v = 70;
 
 size_t x_start = 0;
 size_t y_start = x_start + N;
@@ -60,7 +60,7 @@ public:
     for (int t = 0; t < N - 1; t++) {
       fg[0] += 5*CppAD::pow(vars[delta_start + t], 2);
       fg[0] += 5*CppAD::pow(vars[a_start + t], 2);
-      fg[0] += 1000*CppAD::pow(vars[delta_start + t] * vars[v_start+t], 2);
+      fg[0] += 300*CppAD::pow(vars[delta_start + t] * vars[v_start+t], 2);
     }
 
     // Minimize the value gap between sequential actuations.
